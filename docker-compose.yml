@@ -1,0 +1,11 @@
+version: "3.1"
+services:
+  fantasy_db:
+      image: postgres:9
+      container_name: fantasy_db
+      volumes:
+          - ./skrypty/create.sql:/docker-entrypoint-initdb.d/1-schema.sql
+          - ./skrypty/insert.sql:/docker-entrypoint-initdb.d/2-schema.sql
+      ports:
+          - "5432:5432"
+

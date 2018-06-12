@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head></h:head>
+
+<f:view>
+    <h:body>
+        <h:panelGroup>
+            <h1>Welcome, #{authService.userName}</h1>
+            <h2>Your categories:</h2>
+            <h:panelGroup id ="viewPanel">
+                <h:form>
+                    <ul>
+                        <ui:repeat value="#{remoteCategoryService.getAllCategories()}" var="item">
+                            <li>
+                                <h3>
+                                    #{item.getCategoryLabel()}
+                                    <h:commandButton value="Edit" action="#{categoryService.update(item)}"/>
+                                    <h:commandButton value="Delete" action="#{remoteCategoryService.categoryService.deleteCategory(item)}"></h:commandButton>
+                                </h3>
+                                <p>#{item.getParameterLabel()} : #{item.getParameterValue()}<br/>
+                                elements:</p>
+                                <ul>
+                                    <ui:repeat value="#{item.getElements()}" var="item2">
+                                        <li>
+                                            <h4>
+                                                #{item2.getElementLabel()}
+                                                <h:commandButton value="Edit" action="#{elementService.update(item2)}"/>
+                                                <h:commandButton value="Delete" action="#{remoteElementService.elementService.deleteElement(item2)}"></h:commandButton>
+                                            </h4>
+                                            <p>
+                                            #{item2.getFirstParameterLabel()} : #{item2.getFirstParameterValue()}<br/>
+                                            #{item2.getSecondParameterLabel()} : #{item2.getSecondParameterValue()}<br/>
+                                            #{item2.getThirdParameterLabel()} : #{item2.getThirdParameterValue()}<br/>
+                                            #{item2.getFourthParameterLabel()} : #{item2.getFourthParameterValue()}<br/>
+                                            </p>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </li>
+                        </ui:repeat>
+                    </ul>
+                </h:form>
+            </h:panelGroup>
+
+            <h:form>
+                <h:commandButton type="submit"  value="Add Category" action="#{categoryService.insert()}"/>
+            </h:form><br/>
+
+            <h:form>
+                <h:commandButton type="submit"  value="Add Element" action="#{elementService.insert()}"/>
+            </h:form><br/>
+
+            <h:button value="Change Password" outcome="changePassword" /><br/>
+
+
+            <h:form>
+                <h:commandButton type="submit" value="Logout" action="#{authService.logout()}"/>
+            </h:form>
+
+        </h:panelGroup>
+    </h:body>
+</f:view>
+</html>
