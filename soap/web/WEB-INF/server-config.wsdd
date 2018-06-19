@@ -46,6 +46,22 @@
     <parameter name="scope" value="Application"/>
     <namespace>empty</namespace>
   </service>
+    <service name="CategoryWS" provider="java:RPC" style="wrapped" use="literal" >
+        <parameter name="className" value="webservices.CategoryWS"/>
+        <parameter name="allowedMethods" value="*"/>
+        <parameter name="scope" value="Application"/>
+        <namespace>http://webservices</namespace>
+      <beanMapping languageSpecificType="java:soapModel.Category"
+                   qname="ns1:Category" xmlns:ns1="http://soapModel"/>
+    </service>
+  <service name="ElementWS" provider="java:RPC" style="wrapped" use="literal">
+    <parameter name="className" value="webservices.ElementWS"/>
+    <parameter name="allowedMethods" value="*"/>
+    <parameter name="scope" value="Application"/>
+    <namespace>http://webservices</namespace>
+    <beanMapping languageSpecificType="java:soapModel.Element"
+                 qname="ns1:Element" xmlns:ns1="http://soapModel"/>
+  </service>
   <handler name="soapmonitor" type="java:org.apache.axis.handlers.SOAPMonitorHandler">
     <parameter name="wsdlURL" value="/axis/SOAPMonitorService-impl.wsdl"/>
     <parameter name="serviceName" value="SOAPMonitorService"/>
