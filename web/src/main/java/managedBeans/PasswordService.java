@@ -4,6 +4,7 @@ import ejb.AuthorizationService;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.naming.Context;
@@ -15,7 +16,8 @@ import java.util.Hashtable;
 @ViewScoped
 public class PasswordService {
 
-    private AuthService authService = new AuthService();
+    @ManagedProperty("#{authService}")
+    private AuthService authService;
 
     @EJB(mappedName = "java:global/ejb/AuthorizationServiceImpl!ejb.AuthorizationService")
     private AuthorizationService authorizationService;
@@ -76,5 +78,9 @@ public class PasswordService {
 
     public void setOldPasswordError(boolean oldPasswordError) {
         this.oldPasswordError = oldPasswordError;
+    }
+
+    public void setAuthService(AuthService authService) {
+        this.authService = authService;
     }
 }

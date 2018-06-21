@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="soap">
+    <output-path>$PROJECT_DIR$/out/artifacts/soap</output-path>
+    <root id="archive" name="soap.war">
+      <element id="javaee-facet-resources" facet="soap/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="soap" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
+          <element id="library" level="project" name="Maven: org.apache.axis:axis:1.4" />
+          <element id="library" level="project" name="Maven: wsdl4j:wsdl4j:1.6.2" />
+          <element id="library" level="project" name="Maven: commons-discovery:commons-discovery:0.5" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/soap/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>

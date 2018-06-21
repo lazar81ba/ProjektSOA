@@ -39,7 +39,7 @@ public class ElementWS {
   }
 
   private void executePowerUpdate(model.Element elementToModify){
-      Timer timer = new Timer(10000, new ActionListener() {
+      Timer timer = new Timer(60000, new ActionListener() {
           @Override
           public void actionPerformed(ActionEvent arg0) {
               int randomNum = ThreadLocalRandom.current().nextInt(-2, 2);

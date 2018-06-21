@@ -3,15 +3,21 @@ package managedBeans;
 import model.Category;
 import model.Element;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ElementService {
 
 
@@ -24,6 +30,22 @@ public class ElementService {
     private Element panelElement;
     private boolean update;
     private List<SelectItem> selectItems;
+    private boolean dataSubmitted;
+
+
+    @PostConstruct
+    public void setUp(){
+        Map<String,String> params =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        String elementID = params.get("elementID");
+        if(elementID!=null && !elementID.equals("")){
+            panelElement = remoteElementService.getElementById(Long.parseLong(elementID));
+            panelElement.setCategory(new Category());
+            update = true;
+        }
+        else
+            panelElement = new Element();
+    }
 
 
     private void fillSelectItems() {
@@ -33,24 +55,11 @@ public class ElementService {
         }
     }
 
-    public String insert(){
-        panelElement = new Element();
-        update = false;
-        return "elementPanel";
-    }
-
-
-    public String update(Element element){
-        panelElement = element;
-        update = true;
-        return "elementPanel";
-    }
-
     public String submit(){
         if(update)
-            remoteElementService.getElementService().updateElement(panelElement);
+            remoteElementService.updateElement(panelElement);
         else
-            remoteElementService.getElementService().insertElement(panelElement);
+            remoteElementService.insertElement(panelElement);
         return "index.xhmtl?faces-redirect=true";
 
     }
@@ -61,15 +70,6 @@ public class ElementService {
     public void setPanelElement(Element panelElement) {
         this.panelElement = panelElement;
     }
-
-    public boolean isUpdate() {
-        return update;
-    }
-
-    public void setUpdate(boolean update) {
-        this.update = update;
-    }
-
 
     public List<SelectItem> getSelectItems() {
         return selectItems;
@@ -86,5 +86,13 @@ public class ElementService {
     public void setRemoteCategoryService(RemoteCategoryService remoteCategoryService) {
         this.remoteCategoryService = remoteCategoryService;
         fillSelectItems();
+    }
+
+    public boolean isDataSubmitted() {
+        return dataSubmitted;
+    }
+
+    public void setDataSubmitted(boolean dataSubmitted) {
+        this.dataSubmitted = dataSubmitted;
     }
 }

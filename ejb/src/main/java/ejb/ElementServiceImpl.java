@@ -1,5 +1,6 @@
 package ejb;
 
+import interceptors.AddElement;
 import model.Category;
 import model.Element;
 import repository.CategoryDAO;
@@ -10,6 +11,9 @@ import repository.implementation.ElementDAOImpl;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Stateless
 @Remote(ElementService.class)
@@ -45,7 +49,17 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
+    @AddElement
     public void insertElement(Element element) {
         elementDAO.insert(element);
+    }
+
+    @Override
+    public Collection<Element> getBestElements(String elementLabel) {
+        return  elementDAO.getByLabel(elementLabel)
+                            .stream()
+                            .sorted(Comparator.comparing(Element::getSecondParameterValue).reversed())
+                            .limit(5)
+                            .collect(Collectors.toList());
     }
 }

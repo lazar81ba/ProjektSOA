@@ -4,14 +4,82 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
 
 <h:head></h:head>
-
 <f:view>
     <h:body>
         <h:panelGroup>
             <h1>Welcome, #{authService.userName}</h1>
+
+            <p:growl widgetVar="growl" showDetail="true" />
+
+            <h:form id="bestElements">
+                <h:panelGroup id="bestElementsPanel">
+                    <p:panelGrid columns="3" layout="grid">
+                        <p:dataTable var="dragonElement" value="#{bestElementsService.bestDragons}" style="max-width: 300px">
+                            <f:facet name="header">
+                                Best Dragons
+                            </f:facet>
+                            <p:column headerText="Name">
+                                <h:outputText value="#{dragonElement.firstParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Gold">
+                                <h:outputText value="#{dragonElement.secondParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Power">
+                                <h:outputText value="#{dragonElement.fourthParameterValue}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dataTable var="mageElement" value="#{bestElementsService.bestMages}" style="max-width: 300px">
+                            <f:facet name="header">
+                                Best Mages
+                            </f:facet>
+                            <p:column headerText="Name">
+                                <h:outputText value="#{mageElement.firstParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Mana">
+                                <h:outputText value="#{mageElement.secondParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Power">
+                                <h:outputText value="#{mageElement.fourthParameterValue}" />
+                            </p:column>
+                        </p:dataTable>
+
+                        <p:dataTable var="elfElement" value="#{bestElementsService.bestElves}" style="max-width: 300px">
+                            <f:facet name="header">
+                                Best Elves
+                            </f:facet>
+                            <p:column headerText="Name">
+                                <h:outputText value="#{elfElement.firstParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Arrows">
+                                <h:outputText value="#{elfElement.secondParameterValue}" />
+                            </p:column>
+                            <p:column headerText="Power">
+                                <h:outputText value="#{elfElement.fourthParameterValue}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:panelGrid>
+                </h:panelGroup>
+                <p:socket onMessage="handleMessage" channel="/update" >
+                    <p:ajax event="message" update="bestElements:bestElementsPanel" />
+                </p:socket>
+            </h:form>
+
+
+
+            <script type="text/javascript">
+                function handleMessage(facesmessage) {
+                    facesmessage.severity = 'info';
+                    PF('growl').show([facesmessage]);
+                }
+            </script>
+
             <h2>Your categories:</h2>
             <h:panelGroup id ="viewPanel">
                 <h:form>
@@ -20,8 +88,13 @@
                             <li>
                                 <h3>
                                     #{item.getCategoryLabel()}
-                                    <h:commandButton value="Edit" action="#{categoryService.update(item)}"/>
-                                    <h:commandButton value="Delete" action="#{remoteCategoryService.categoryService.deleteCategory(item)}"></h:commandButton>
+                                    <p:commandButton value="Edit" ajax="false" action="categoryPanel" >
+                                        <f:param name="categoryID" id="categoryID" value="#{item.getId()}" />
+                                    </p:commandButton>
+                                    <p:commandButton value="Delete"
+                                                     process="@this"
+                                                     update=":viewPanel"
+                                                     action="#{remoteCategoryService.deleteCategory(item)}"></p:commandButton>
                                 </h3>
                                 <p>#{item.getParameterLabel()} : #{item.getParameterValue()}<br/>
                                 elements:</p>
@@ -30,8 +103,13 @@
                                         <li>
                                             <h4>
                                                 #{item2.getElementLabel()}
-                                                <h:commandButton value="Edit" action="#{elementService.update(item2)}"/>
-                                                <h:commandButton value="Delete" action="#{remoteElementService.elementService.deleteElement(item2)}"></h:commandButton>
+                                                <p:commandButton value="Edit" ajax="false" action="elementPanel">
+                                                    <f:param name="elementID" id="elementID" value="#{item2.getId()}" />
+                                                </p:commandButton>
+                                                <p:commandButton value="Delete"
+                                                                 process="@this"
+                                                                 update=":viewPanel"
+                                                                 action="#{remoteElementService.deleteElement(item2)}"></p:commandButton>
                                             </h4>
                                             <p>
                                             #{item2.getFirstParameterLabel()} : #{item2.getFirstParameterValue()}<br/>
@@ -49,11 +127,11 @@
             </h:panelGroup>
 
             <h:form>
-                <h:commandButton type="submit"  value="Add Category" action="#{categoryService.insert()}"/>
+                <h:commandButton type="submit"  value="Add Category" action="categoryPanel"/>
             </h:form><br/>
 
             <h:form>
-                <h:commandButton type="submit"  value="Add Element" action="#{elementService.insert()}"/>
+                <h:commandButton type="submit"  value="Add Element" action="elementPanel"/>
             </h:form><br/>
 
             <h:button value="Change Password" outcome="changePassword" /><br/>

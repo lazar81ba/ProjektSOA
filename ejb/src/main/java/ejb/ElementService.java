@@ -14,4 +14,5 @@ public interface ElementService {
     public void updateElement(Element element);
     public void deleteElement(Element element);
     public void insertElement(Element element);
+    public Collection<Element> getBestElements(String elementLabel);
 }

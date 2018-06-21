@@ -6,76 +6,91 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <f:view>
-    <h:form>
-        <h:panelGroup id ="elementPanel">
-            <hr/>
-            <h:outputLabel value="Element label"/><br/>
-            <h:inputText id="elementLabel" value="#{elementService.panelElement.elementLabel}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+    <h:panelGroup id="mainForm">
+        <h:form>
+            <h:panelGroup id ="elementPanel">
+                <hr/>
+                <h:outputLabel value="Element label"/><br/>
+                <h:inputText id="elementLabel" value="#{elementService.panelElement.elementLabel}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="First Parameter Label"/><br/>
-            <h:inputText id="firstParamLabel" value="#{elementService.panelElement.firstParameterLabel}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="First Parameter Label"/><br/>
+                <h:inputText id="firstParamLabel" value="#{elementService.panelElement.firstParameterLabel}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="First Parameter Value"/><br/>
-            <h:inputText id="firstParamValue" value="#{elementService.panelElement.firstParameterValue}"  requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="First Parameter Value"/><br/>
+                <h:inputText id="firstParamValue" value="#{elementService.panelElement.firstParameterValue}"  requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Second Parameter Label"/><br/>
-            <h:inputText id="secondParamLabel" value="#{elementService.panelElement.secondParameterLabel}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Second Parameter Label"/><br/>
+                <h:inputText id="secondParamLabel" value="#{elementService.panelElement.secondParameterLabel}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Second Parameter Value"/><br/>
-            <h:inputText id="secondParamValue" value="#{elementService.panelElement.secondParameterValue}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Second Parameter Value"/><br/>
+                <h:inputText id="secondParamValue" value="#{elementService.panelElement.secondParameterValue}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Third Parameter Label"/><br/>
-            <h:inputText id="thirdParamLabel" value="#{elementService.panelElement.thirdParameterLabel}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Third Parameter Label"/><br/>
+                <h:inputText id="thirdParamLabel" value="#{elementService.panelElement.thirdParameterLabel}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Third Parameter Value"/><br/>
-            <h:inputText id="thirdParamValue" value="#{elementService.panelElement.thirdParameterValue}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Third Parameter Value"/><br/>
+                <h:inputText id="thirdParamValue" value="#{elementService.panelElement.thirdParameterValue}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Fourth Parameter Label"/><br/>
-            <h:inputText id="fourthParamLabel" value="#{elementService.panelElement.fourthParameterLabel}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Fourth Parameter Label"/><br/>
+                <h:inputText id="fourthParamLabel" value="#{elementService.panelElement.fourthParameterLabel}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/><br/>
 
 
-            <h:outputLabel value="Fourth Parameter Value"/><br/>
-            <h:inputText id="fourthParamValue" value="#{elementService.panelElement.fourthParameterValue}" requiredMessage="test req" validatorMessage="test">
-            </h:inputText>
-            <br/><br/>
+                <h:outputLabel value="Fourth Parameter Value"/><br/>
+                <h:inputText id="fourthParamValue" value="#{elementService.panelElement.fourthParameterValue}" requiredMessage="test req" validatorMessage="test">
+                </h:inputText>
+                <br/>
 
-            <h:selectOneMenu id="select" value="#{elementService.panelElement.category}" converter="#{categoryConverter}">
-                <f:selectItem id="selectItemID" itemLabel="Select Category" noSelectionOption="true" itemDisabled="true"></f:selectItem>
-                <f:selectItems id="selectItemsID" value="#{elementService.selectItems}"/>
-                <!--<f:converter converterId="categoryConverter"></f:converter>-->
-            </h:selectOneMenu>
-            <h:message for="select" style="color: red;" />
-            <h:message for="selectItemID" style="color: red;" />
-            <h:message for="selectItemsID" style="color: red;" />
+                <h:panelGroup rendered="#{!elementService.dataSubmitted}">
+                    <h:commandButton action="#{elementService.setDataSubmitted(true)}" value="Submit">
+                        <f:ajax render="mainForm"/>
+                    </h:commandButton>
+                </h:panelGroup>
 
-            <br/><br/><br/>
 
-            <h:commandButton value="Submit" action="#{elementService.submit}"></h:commandButton>
-        </h:panelGroup>
-    </h:form>
+
+                <br/><br/>
+
+                <h:panelGroup rendered="#{elementService.dataSubmitted}">
+
+                    <h:selectOneMenu id="select" value="#{elementService.panelElement.category}" converter="#{categoryConverter}">
+                        <f:selectItem id="selectItemID" itemLabel="Select Category" noSelectionOption="true" itemDisabled="true"></f:selectItem>
+                        <f:selectItems id="selectItemsID" value="#{elementService.selectItems}"/>
+                        <!--<f:converter converterId="categoryConverter"></f:converter>-->
+                    </h:selectOneMenu>
+                    <h:message for="select" style="color: red;" />
+                    <h:message for="selectItemID" style="color: red;" />
+                    <h:message for="selectItemsID" style="color: red;" />
+
+                    <br/><br/><br/>
+
+                    <h:commandButton value="Submit" action="#{elementService.submit}"></h:commandButton>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:form>
+    </h:panelGroup>
 
     <h:button value="Back" outcome="index" /><br/>
 

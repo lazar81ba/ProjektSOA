@@ -70,7 +70,13 @@
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.sasl:jboss-sasl:1.0.5.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.marshalling:jboss-marshalling-river:2.0.5.Final" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.2.16" level="project" />
-    <orderEntry type="library" name="Maven: org.omnifaces:omnifaces:3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.omnifaces:omnifaces:2.6.9" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:6.0" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-runtime:2.4.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.7" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-runtime-native:2.4.3" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-compat-jbossweb:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-compat-tomcat:2.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.atmosphere:atmosphere-compat-tomcat7:2.0.1" level="project" />
   </component>
 </module>
