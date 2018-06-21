@@ -12,7 +12,6 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
@@ -21,6 +20,7 @@ public class ElementServiceImpl implements ElementService {
 
     private ElementDAO elementDAO = new ElementDAOImpl();
     private CategoryDAO categoryDAO= new CategoryDAOImpl();
+
 
     @Override
     public Collection<Element> getAllElements(Category category) {
@@ -42,7 +42,6 @@ public class ElementServiceImpl implements ElementService {
     public void updateElement(Element element) {
         elementDAO.update(element);
     }
-
     @Override
     public void deleteElement(Element element) {
         elementDAO.delete(element);
